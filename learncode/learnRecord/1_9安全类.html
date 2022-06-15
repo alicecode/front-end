@@ -1,0 +1,18 @@
+<!-- 
+    安全类
+    CSRF     利用本身漏洞帮助自动执行
+        基本概念，缩写：跨站请求伪造，cross-site request forgery
+        攻击原理
+            用户 登录  网站A  网站A下发cookie
+            用户 访问  网站B  网站B下发引用点击（获取用户cookie等信息）->访问网站A
+        防御措施
+            Token验证
+            Referer验证     判断页面来源
+            隐藏令牌        放在http头种
+            
+    XSS     向页面中注入js运行
+        跨域脚本攻击  
+        攻击原理：http://www.imooc.com/learn/812
+        防御措施：http://www.imooc.com/learn/812
+
+ -->

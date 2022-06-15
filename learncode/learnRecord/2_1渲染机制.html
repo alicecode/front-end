@@ -1,0 +1,32 @@
+<!-- 
+    渲染机制
+    什么是DOCTYPE及作用
+      DTD文档类型定义-是一系列的语法规则，用来定义XML或（X）HTML的文件类型。
+        浏览器会用它来判断文档类型决定用何种协议来解析以及切换浏览器模式。
+      DOCTYPE使用来声明文档类型和DTD规范的，一个主要的用途是文件的合法性验证，如果文件不合法，那么浏览器解析时会出一些差错。
+      HTML5
+        <!DOCTYPE html>
+      HTML4
+        Strict模式        该DTD包含所有HTML元素和属性，但不包括展示型的和弃用的元素（比如font）
+        Transitional模式  
+
+      浏览器渲染过程
+        html通过HTML parser转换成DOM Tree 
+        style sheets通过css parse转换成style rules
+        将DOM Tree和style Rule 结合Attachement 生成Render Tree
+        经过layout (计算元素位置)->painting(绘画)——>display
+
+    重排Reflow
+      定义：DOM结构中的各个元素都有自己的盒子（模型），这些都需要浏览器根据各种样式来计算并根据计算结果将元素放大它该出现的位置，这个过程称之为reflow。
+      触发Reflow
+        当你增加、删除、修改DOM节点时，会导致Reflow或Repaint
+        当移动DOM的位置，或是搞个动画的时候
+        当修改css样式的时候
+        当Resize窗口的时候（移动端没有该问题），或滚动的时候
+        当修改文案网页的默认字体的时候。
+    重绘Repaint
+      定义：当各种盒子的位置、大小以及其他属性，例如颜色、字体大小等都确定下来后，浏览器于是便把这些元素都按照各自的特性绘制了一遍，于是页面的内容出现了，这个过程称之为repaint
+      触发Repaint DOM改动和CSS改动
+
+    布局Layout
+ -->

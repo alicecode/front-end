@@ -1,0 +1,53 @@
+<!-- 
+    题目：提升页面性能的方法有哪些？
+    1、资源压缩合并，减少http请求
+    2、非核心代码异步加载->异步架子的方式->异步加载的区别
+    3、利用浏览器缓存-缓存的分类-缓存的原理
+    4、使用CDN
+    5、预解析
+        <meta http-equiv="x-dns-prefetch-control" content="on">
+        <link rel="dns-prefetch" href='//host_name_to_prefetch.com'>
+
+    1.异步脚本加载
+        动态脚本加载    defer   async
+    2.异步加载的区别
+        defer是在HTML解析完之后才会执行，如果是多的，按照加载的顺序依次执行。
+        async是在加载完之后立即执行，如果是多个，执行顺序和加载顺序无关。
+    1.缓存的分类
+        1.强缓存
+            expires (过期时间)Expire：Thu,21 jan 2017 23:39:02 GMT(服务器时间)
+            Chache-Control Catche-Control:max-age=3600（浏览器的缓存时间,并以浏览器的时间作比较。）
+        2.协商缓存
+            Last-Modified if-Moidified-Since Last-Modified:Wed,26 Jan 2017 00:35:11 GMT
+            Etag if-None-Match
+ -->
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+     <title>Document</title>
+     <!-- <script src="./defer1.js" charset="utf-8" defer></script> -->
+     <!-- <script src="./defer2.js" charset="utf-8" defer></script> -->
+     <script src="./async1.js" charset="utf-8" async></script>
+     <script src="./async2.js" charset="utf-8" async></script>
+     <!-- 当async1.js文件比较小时无法看出效果。 -->
+ </head>
+ <body>
+     <div class="">
+        test
+        <script>
+            console.log('write');
+            document.write('<span>write</span>');     
+        </script>
+        <script>
+            for(var i =0;i<20000;i++){
+                if(i%2000 === 0){
+                    console.log(i);
+                }
+            }
+        </script>
+     </div>
+ </body>
+ </html>

@@ -1,0 +1,81 @@
+<!-- 
+    原型链
+        创建对象有几种方法
+            var o1 = {name:'o1'}
+            var o11 = new Object({name:'o11'})
+
+            var M = function(){this.name='o2'};
+            var o2 = new M();
+
+            var P = {name:'o3'};
+            var o3 = Object.create(P);
+
+        原型、构造函数、实例、原型链
+            构造函数（被new所使用的函数）
+            构造函数可以通过new生成实例（）
+
+            构造函数 -> prototype  ->原型对象
+            原型对象 -> constructor ->构造函数
+            M.prototype.constructor === M
+
+            实例的 ->__proto__ ->原型对象
+            o2.__proto__ === M.prototype
+
+            原型对象 -> __prototype__ ->原型对象
+
+        instanceof的原理
+            实例对象的__proto__   构造函数的prototype（原型）
+            实例对象的constructor  ->  构造函数
+
+            instanceof  判断的是实例对象的__proto__和构造函数的prototype引用地址是否一样
+            o2 instanceof M                             ->true
+            o2 instanceof Object                        ->true
+            o2.__ptoto__ === M.prototype                ->true
+            M.prototype__proto__ === Object.prototype   ->true
+            o2.constrictor === M        ->true
+            o2.constructor === Object   ->false
+        new运算符
+            1. 一个新对象被创建。它继承自foo.prototype
+            2.构造函数foo被执行。执行的时候，相应的参数会被传入，同时上下文（this）会被指定为这个心实例。
+                new foo等同于new foo(),只能用在不传递任何参数的情况。
+            3.如果构造函数返回了一个‘对象’，那么这个对象会取代整个new出来的结果，
+                如果构造函数没有返回对象，那么new出来的结果为步骤一创建的对象
+ -->
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+     <title>Document</title>
+ </head>
+ <body>
+    <script> 
+    //  第一种方式：字面量
+    var o1 = {name:'o1'};
+    var o11 = new Object({name:'o11'})
+    //  第二种方式：通过构造函数
+    function M(name){this.name=name}
+    var o2 = new M('o2');
+    // 第三种方式：Object.create()
+    var p = {name:'o3'}
+    var o3 = Object.create(p);
+    o3.__proto__ === p;
+
+    M.prototype.say=function(){
+        console.log('say hai');
+    }
+    var o4 = new M('o4');
+
+    var new2 = function(func){
+        var o = Object.create(func.prototype);  //关联原型对象
+        var k = func.call(o);                   //执行构造函数
+        if(typeof k === 'object'){              //判断构造函数返回的是否是对象
+            return k
+        }else{
+            return o
+        }
+    }
+    </script>
+ </body>
+ </html>

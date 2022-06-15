@@ -1,0 +1,113 @@
+<!-- 
+    1.基本概念：标准模型+IE模型   margin border padding
+        标准模型和IE模型区别：宽度高度计算方式不同
+            标准盒模型宽高（不包括border+padding）为里面的content宽度高度
+            IE模型宽度高度（包括border+padding）为border+padding+content
+    2.css如何设置者两种模型
+        box-sizing:content-box(浏览器默认的)
+        box-sizing:border-box
+    3.js如何设置获取和模型对应的宽和高
+        dom.style.width/height  (获取的是dom里面内联属性)
+        dom.currentStyle.width/height (获取渲染后的，只有IE支持)
+        window.getComputedStyle(dom).width/height(通用性好)
+        dom.getBoundingClientReact().width/height（绝对位置）
+    5.实例题（根据盒模型解释便觉重叠）
+
+    6.BFC（边距重叠解决方案）
+        解决边距重叠，于BFC   IFC
+        原理（渲染规则）：
+            1.BFC垂直方向的边距会发生重叠；
+            2.BFC的区域不会与浮动元素的box发生重叠；
+            3.BFC在页面上是一个独立的区域，外面元素不会影响里面的元素，里面的元素不会影响外面的；
+            4.计算BFC高度的时候，浮动元素也会参与计算。
+        如何创建BFC   overflow:hidden;
+            1.float 值不为none
+            2.position不为static，relative
+            3.display 为table，
+            4.overflow:hidden/auto
+
+ -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta  content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+         html * {margin:0;padding:0;}
+    </style>
+</head>
+<body>
+    <section id="sec">
+        <style>
+            #sec{
+                background-color: #f00;
+                overflow: hidden;
+                /* 相当于给元素创建BFC （IFC） */
+            }
+            .child{
+                height:100px;
+                margin-top:30px;
+                background-color: yellow;
+            }
+        </style>
+        <article class="child"></article>
+    </section>
+    <!-- BFC垂直方向边距样式 (取最大值边距) -->
+    <section id="margin">
+        <style>
+            #margin{
+                background-color: pink;
+                overflow: hidden;
+            }
+            #margin p{
+                margin:10px auto 25px;
+                background: red;
+            }
+        </style>
+        <p>1</p>
+        <!-- 创建BFC  解决边距重叠 -->
+        <div style="overflow:hidden">
+            <p>2</p>
+        </div>
+        <p>3</p>
+    </section>
+
+    <!-- BFC不与float重叠 -->
+    <section id="layout">
+        <style>
+            #layout{background-color: red;}
+            #layout .left{
+                float:left;
+                width: 100px;
+                height:100px;
+                background-color: pink;
+            }
+            #layout .right{
+                height:110px;
+                background-color: #ccc;
+                overflow: auto;
+                /* BFC元素不会与float重叠 */
+            }
+        </style>
+        <div class="left"></div>
+        <div class="right"></div>
+    </section>
+
+    <section id="float">
+        <style>
+            /* 清除浮动 */
+            #float{
+                background:#ccc;
+                float: left;
+                /* overflow: hidden; */
+            }
+            #float .float{
+                float:left;
+            }
+        </style>
+        <div class="float">我是浮动元素</div>
+    </section>
+</body>
+</html>

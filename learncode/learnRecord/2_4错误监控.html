@@ -1,0 +1,38 @@
+<!-- 
+    前端错误的分类
+        即时运行错误 捕获方式
+            1)try..catch    2)window.onerror
+        资源加载错误
+            1）object.onerror     2）performance.getEntries()   3）Error事件捕获
+            performance.getEntries()获取已成功加载的资源。
+            document.getElementsByTagName('img');获取加载的资源减去已经加载的剩下的是未成功加载的。
+            performance.getEntries().foreach(item=>{console.log(item.name)})
+            延伸：跨域js运行错误可以捕获么，错误提示什么，应该怎么处理？
+                1、在script标签增加crossorigin属性
+                2、设置js资源响应头Access-Control-Allow-Origin:*
+    错误的捕获方式
+    上报错误的基本原理
+        1、采用Ajax通信的方式上报（不采用）
+        2、利用image对象上报
+ -->
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+     <title>错误监控</title>
+     <script>
+         window.addEventListener('error',function(e){
+             console.log("捕获",e);
+         },true)
+         //捕获阶段触发，（object.onerror会阻止事件冒泡）
+     </script>
+ </head>
+ <body>
+     <script src="//baidu.com/test.js"></script>
+     <script type="text/javascript">
+        (new Image()).src = 'http://baidu.com/tesjs?r=tksjk'//利用对象上报
+     </script>
+ </body>
+ </html>

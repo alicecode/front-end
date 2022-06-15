@@ -1,0 +1,95 @@
+<!-- 
+    DOM事件类
+    基本概念：DOM事件的级别
+        DOM0 element.onclick = function(){}
+        DOM1  没有与事件相关的
+        DOM2 element.addEventListener('click',function(){},false)
+        DOM3 element.addeventListener('keyup',function(){},false)
+    DOM事件模型：
+        捕获
+        冒泡
+    DOM事件流：
+        浏览器页面与用户做交互过程。（点击鼠标左键传到页面）
+        完整的事件流分三段：
+        阶段一：捕获
+        阶段二：目标阶段（按钮）
+        阶段三：冒泡  （上传到window对象）
+    描述DOM事件捕获的具体流程（从上到下）
+        第一个接触到事件的对象
+        window -> document -> html (document.documentElement) -> body -> ...
+
+    Event对象的常见应用
+        event.preventDefault()阻止默认事件
+        event.stopPropagation()
+        event.stopImmediatePropagation()     
+            (注册两个click事件都会执行   若在A事件中添加这个方法会阻止下一个方法B执行)
+        事件代理，将子元素事件绑定到父元素上。
+        event.currentTarget  (当前所绑定的事件)
+        event.target         （当前被点击的元素）
+
+    自定义事件
+        var eve = new Event('custome');
+        dom.addEventListener('custome',function(){
+            console.log('custome');
+        })
+        dom.dispachEvent('eve');触发事件
+
+        CusomeEvent   可以添加数据new CusomeEvent('custome',data);
+
+    1.捕获事件 2注册事件，3相应的时候Event
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="ev">
+        <style>
+            #ev{
+                width:300px;
+                height:100px;
+                text-align: center;
+                line-height: 100px;
+                background: green;
+                color:#fff;
+            }
+        </style>
+        目标元素
+    </div>
+    <script>
+        // 事件捕获
+        var ev = document.getElementById('ev');
+
+        ev.addEventListener('click',function(){
+            console.log('ev captrue')
+        },true);
+
+        window.addEventListener('click',function(){
+            console.log('window captrue')
+        },true);  //默认false   true捕获阶段触发
+        document.addEventListener('click',function(){
+            console.log('document captrue')
+        },true);
+        document.documentElement.addEventListener('click',function(){
+            console.log('html captrue')
+        },true);
+        document.body.addEventListener('click',function(){
+            console.log('body captrue')
+        },true);
+        
+        // 自定义事件
+        var eve = new Event('test');
+        ev.addEventListener('test',function(){
+            console.log('test despatch')
+        });
+        setTimeout(function(){
+            ev.dispatchEvent(eve);
+        },1000)
+        
+    </script>
+</body>
+</html>

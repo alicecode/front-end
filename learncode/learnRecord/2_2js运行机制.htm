@@ -1,0 +1,53 @@
+<!-- 
+    任务队列
+        同步任务（console.log(1);）
+        异步任务（setTimeout）
+    如何理解js的单线程
+    什么是任务队列
+    什么是Event Loop（事件循环）
+        运行栈
+        拿走异步任务
+        同步任务执行后，timer时间到了会被放到任务栈中（事件）被放到运行栈中。执行完再去任务栈中取任务
+
+        setTimeout和setInterval
+        DOM事件（事件触发时，浏览器将事件放到任务栈中）
+        ES6中的Promise
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        console.log(1);//执行同步任务
+        setTimeout(function(){//异步任务（挂起）（同步任务执行之后回来处理这个异步任务）
+            console.log(2)
+        },0)
+        console.log(3);//执行同步任务
+        
+        console.log('a')
+        while(true){}
+        console.log('b')//只输出a
+
+        console.log('a')
+        setTimeout(function(){
+            console.log('b')
+        },0)
+        while(true){}//只输出a
+
+        //异步任务的放入时间和执行时间（到执行的时间会被放到执行队列执行）
+        for(var i=0;i<5;i++){
+            setTimeout(function(){
+                console.log(i)
+            },1000)
+        }//5,5,5,5
+        
+        
+    </script>
+</body>
+</html>
+

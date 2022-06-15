@@ -1,0 +1,66 @@
+<!-- 
+    双向绑定
+    设计模式
+    生命周期
+    源码分析
+
+    1.了解MVVM框架吗？
+        vue.js      React.js     angular.js
+        一定要想好说哪个，
+        收住优点攒着下面说，开启引导模式
+        话说的别太满低调谨慎。
+    2.谈谈你对MVVM框架的认识？
+        1.先聊MVC   model   view    control
+        2.聊MVVM    Model   View    ViewModel
+            Model   <->   ViewModel   <->   View
+        1.聊聊MVC彰显知识面涉猎较多。
+        2.把MVVC定义说清楚，表达概念理解到位
+        3.对比MVVC和MVC
+    3.双向绑定是什么原理，可以写出来么？
+        view(页面input数据改变)    -反向input事件->   data
+        data（数据变化绑定到页面中）    -正向Object.defineproperty->   view
+        Object.defineproperty   监听data数据变化，会有回调函数。
+        input事件
+
+        Object.defineproperty 的用法熟记于心
+        Object.defineproperty 与 reflect.property的去别（前者返回对象，后者返回布尔值）
+        Object.defineproperty要会手写
+
+    4.使用了什么设计模式？
+        data view(viewModel)    监听Observe     通知Dep     回调Watcher （更新ViewModel）
+        设计模式的原理
+        设计模式的伪代码
+
+    5.生命周期是什么？
+        beforeCreate created beforeMounted mounted beforeUpdate updated beforeDestroy destroy
+    6.有看过源码么？
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var obj1 = {};
+        var descriptor = Object.create(null);   //没有继承的属性
+        //默认没有enumrable，onfigurable，没有writable
+        descriptor.value='static';
+        Object.defineProperty(obj1,'key',descriptor);
+        console.log(obj1);
+
+        //显式
+        var obj2 = {};
+        Object.defineProperty(obj2,'key',{
+            enumerable:true,
+            configurable:false,
+            writable:false,
+            value:'static'
+        })
+        console.log(obj2)
+    </script>
+</body>
+</html>
